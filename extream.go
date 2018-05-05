@@ -27,3 +27,31 @@ func initial(s string, ch chan data) getter {
 		return data{SecuritySymbol: name, MarketCap: sum / total}
 	}
 }
+
+type Coop struct {
+	m    map[string]chan data
+	ward map[string]getter
+}
+
+func (c *Coop) Put(d data) {
+	c.m[d.SecuritySymbol] <- d
+}
+
+func (c *Coop) Get(n string) data {
+	return c.ward[n]()
+}
+
+func New(a []string) *Coop {
+	w := make(map[string]getter)
+	m := make(map[string]chan data)
+
+	for _, v := range a {
+		m[v] = make(chan data)
+		w[v] = initial(v, m[v])
+	}
+
+	return &Coop{
+		m:    m,
+		ward: w,
+	}
+}
