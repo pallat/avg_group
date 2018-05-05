@@ -1,8 +1,4 @@
-package main
-
-func main() {
-
-}
+package average
 
 type data struct {
 	SecuritySymbol string  `json:"securitySymbol"`

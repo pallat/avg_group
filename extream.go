@@ -1,4 +1,4 @@
-package main
+package average
 
 func newChStream() map[string]chan data {
 	return map[string]chan data{
